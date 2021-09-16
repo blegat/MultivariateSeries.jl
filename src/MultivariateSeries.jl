@@ -32,12 +32,4 @@ function DynamicPolynomials.MonomialVector(V::Vector{PolyVar{true}}, rg::Seq)
      L
 end
 
-function DynamicPolynomials.MonomialVector(V::Vector{PolyVar{true}}, rg::UnitRange{Int64})
-     L = DynamicPolynomials.Monomial{true}[]
-     for i in rg
-         append!(L, DynamicPolynomials.monomials(V,i))
-     end
-     L
-end
-
 end
