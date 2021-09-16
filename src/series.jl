@@ -134,7 +134,7 @@ function norm(s::Series{C,M}, x::Float64) where {C,M}
     r
 end
 
-function norm(s::Series{C,M}, p::Int64=2) where {C,M}
+function norm(s::Series{C,M}, p::Int=2) where {C,M}
     r = zero(C)
     for (m, c) in s
         r += abs(c)^p
@@ -277,7 +277,7 @@ end
 #----------------------------------------------------------------------
 """
 ```
-maxdegree(σ::Series) -> Int64
+maxdegree(σ::Series) -> Int
 ```
 Maximal degree of the moments defined in the series `σ`.
 """
@@ -430,7 +430,7 @@ function (|)(sigma::Series{C,M}, p::P) where {C,M, P<:AbstractPolynomial}
     return r
 end
 #----------------------------------------------------------------------
-function Base.truncate(s::Series{C,M}, d::Int64) where {C,M}
+function Base.truncate(s::Series{C,M}, d::Int) where {C,M}
     r = Series{C,M}()
     for (m,c) in s
         if degree(m)<= d
@@ -512,7 +512,7 @@ end
 """
  Compute the truncated primitive ``\\int_{x_{i}} s_{| x_{i+1}=0, ...x_n=0}''
 """
-function integrate(s::Series{C,M}, X, i::Int64) where {C,M}
+function integrate(s::Series{C,M}, X, i::Int) where {C,M}
     r = Series{C,M}()
     for (m,c) in s
         if i==length(X) || max(exponentvect(m,X[i+1:end])...) == 0

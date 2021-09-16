@@ -51,7 +51,7 @@ end
 #----------------------------------------------------------------------
 """
 ```
-moment(w::Vector{C}, P::Matrix{C}) -> Vector{Int64} -> C
+moment(w::Vector{C}, P::Matrix{C}) -> Vector{Int} -> C
 ```
 Compute the moment function ``α -> ∑_{i} ω_{i} P_{i}^α``
 associated to the sequence P of r points of dimension n, which is a matrix
@@ -88,7 +88,7 @@ end
 #----------------------------------------------------------------------
 """
 ```
-moment(p::Polynomial, zeta::Vector{C}) -> Vector{Int64} -> C
+moment(p::Polynomial, zeta::Vector{C}) -> Vector{Int} -> C
 ```
 Compute the moment function ``α \\rightarrow p(ζ^α)``.
 """
@@ -111,11 +111,11 @@ end
 #----------------------------------------------------------------------
 """
 ```
-series(w:: Vector{C}, P::AbstractMatrix, X, d::Int64) -> Series{C,M}
+series(w:: Vector{C}, P::AbstractMatrix, X, d::Int) -> Series{C,M}
 ```
 Compute the series of the moment sequence ``∑_i ω_{i} P_{i}^α`` for ``|α| \\leq d``.
 """
-function series(w::Vector{C}, P::AbstractMatrix, X, d::Int64) where C
+function series(w::Vector{C}, P::AbstractMatrix, X, d::Int) where C
     h = moment(w,P)
     L = monomials(X,seq(0:d))
    series(h,L)
@@ -125,11 +125,11 @@ end
 #----------------------------------------------------------------------
 """
 ```
-series(p::Polynomial, zeta, X, d::Int64) -> Series
+series(p::Polynomial, zeta, X, d::Int) -> Series
 ```
 Compute the series of moments ``p(ζ^α)`` for ``|α| \\leq d``.
 """
-function series(p::Polynomial, zeta, X, d::Int64)
+function series(p::Polynomial, zeta, X, d::Int)
     h = moment(p,zeta)
     L = monomials(X,seq(0:d))
     series(h,L)
@@ -142,14 +142,14 @@ sparse_pol(w, E, X) -> Polynomial{true,C}
 ```
 Compute the polynomial ``∑ ωᵢ X^E[i,:]`` with coefficients ``ωᵢ`` and monomial exponents ``E[i,:]``.
 """
-function sparse_pol(w::Vector, E::Matrix{Int64}, X)
+function sparse_pol(w::Vector, E::Matrix{Int}, X)
     sum(w[j]*prod(X[i]^E[j,i] for i in 1:size(E,2)) for j in 1:length(w))
 end
 
 
 
 #------------------------------------------------------------------------
-function sparse_decompose(f, zeta, X, d:: Int64)
+function sparse_decompose(f, zeta, X, d:: Int)
     sigma = series(moment(f,zeta), monomials(X,seq(0:d)))
     w, Xi = decompose(sigma)
     w, log(Xi,zeta)

@@ -29,7 +29,7 @@ end
 #----------------------------------------------------------------------
 """
 ```
-deg(p:Polynomial) -> Int64
+deg(p:Polynomial) -> Int
 ```
 Degree of a polynomial
 """
@@ -65,9 +65,9 @@ end
 #----------------------------------------------------------------------
 """
 ```
-exponent(m::Monomial) -> Array{Int64,1}
+exponent(m::Monomial) -> Array{Int,1}
 ```
-Get the exponent of a monomial as an array of Int64
+Get the exponent of a monomial as an array of Int
 """
 function Base.exponent(m::Monomial)
     return m.z
@@ -109,13 +109,13 @@ end
 #-----------------------------------------------------------------------
 """
 ```
-monoms(V, d::Int64) -> Vector{Monomial}
-monoms(V, rg::UnitRangeInt64) -> Vector{Monomial}
+monoms(V, d::Int) -> Vector{Monomial}
+monoms(V, rg::UnitRangeInt) -> Vector{Monomial}
 ```
 List of all monomials in the variables V up to degree d of from degree d1 to d2,
 ordered by increasing degree.
 """
-function monoms(V::Vector{PolyVar{true}}, rg::UnitRange{Int64})
+function monoms(V::Vector{PolyVar{true}}, rg::UnitRange{Int})
     L = DynamicPolynomials.Monomial{true}[]
     for i in rg
         append!(L, DynamicPolynomials.monomials(V,i))
@@ -126,12 +126,12 @@ end
 #-----------------------------------------------------------------------
 """
 ```
-monoms(V, d::Int64) -> Vector{Monomial}
+monoms(V, d::Int) -> Vector{Monomial}
 ```
 List of all monomials in the variables V up to degree d of from degree d1 to d2,
 ordered by increasing degree.
 """
-function monoms(V::Vector{PolyVar{true}}, d ::Int64)
+function monoms(V::Vector{PolyVar{true}}, d ::Int)
     if (d>0)
         monoms(V,0:d)
     else
@@ -186,7 +186,7 @@ function LinearAlgebra.norm(p::Polynomial{B,T}, x::Float64) where {B,T}
     r
 end
 
-function LinearAlgebra.norm(pol::Polynomial{B,T}, p::Int64=2) where {B,T}
+function LinearAlgebra.norm(pol::Polynomial{B,T}, p::Int=2) where {B,T}
     r=sum(abs(t.α)^p for t in pol)
     exp(log(r)/p)
 end
@@ -198,7 +198,7 @@ end
 function matrixof(P::Vector{Polynomial{B,C}}, L ) where {B,C}
 
     M = fill(zero(C), length(P), length(L))
-    idx = Dict{Monomial{true},Int64}()
+    idx = Dict{Monomial{true},Int}()
     for i in 1:length(L)
         idx[L[i]] = i
     end

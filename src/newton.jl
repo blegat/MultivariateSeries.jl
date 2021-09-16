@@ -62,7 +62,7 @@ end
 #----------------------------------------------------------------------
 function vdm_newton(w0, Xi0, s0, L;  args...)
     eps::Float64 = 1.e-5
-    cmax::Int64  = 10
+    cmax::Int  = 10
     for arg in args
         if arg[1]==:maxit
             cmax=arg[2]

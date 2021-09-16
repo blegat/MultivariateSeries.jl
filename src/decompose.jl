@@ -9,7 +9,7 @@ eps_rkf = eps::Float64 -> function (S)
   i-1;
 end
 
-cst_rkf = r::Int64 -> function (S) return r end
+cst_rkf = r::Int -> function (S) return r end
 
 #------------------------------------------------------------------------
 # Decomposition of the pencil of matrices
